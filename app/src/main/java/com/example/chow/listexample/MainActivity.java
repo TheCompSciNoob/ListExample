@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
     private void createSuperHeroes()
     {
         heroes = new ArrayList<>();
-        heroes.add(new SuperHero("Batman", "half man, half bat", 0));
-        heroes.add(new SuperHero("Datman", "half cat, half dog", 0));
-        heroes.add(new SuperHero("Flatman", "slides under doors", 0));
-        heroes.add(new SuperHero("MyOldMan", "Has 200000MP eyes", 0));
-        heroes.add(new SuperHero("TheNextDoorMan", "Looks like he's going to kill you", 0));
+        heroes.add(new SuperHero("Batman", "half man, half bat", R.drawable.batman));
+        heroes.add(new SuperHero("Datman", "half cat, half dog", R.drawable.datman));
+        heroes.add(new SuperHero("Flatman", "slides under doors", R.drawable.flatman));
+        heroes.add(new SuperHero("OldMan", "Has 200000MP eyes", R.drawable.oldman));
+        heroes.add(new SuperHero("TheNextDoorMan", "Looks like he's going to kill you", R.drawable.thenextdoorman));
     }
 }

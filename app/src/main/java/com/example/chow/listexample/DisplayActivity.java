@@ -21,9 +21,10 @@ public class DisplayActivity extends AppCompatActivity {
 
     private void setDisplayInfo() {
         Intent i = getIntent();
-        SuperHero displayhero = i.getParcelableExtra(MainActivity.HERO_INFO);
-        heroName.setText(displayhero.getName());
-        description.setText(displayhero.getDescription());
+        SuperHero displayHero = i.getParcelableExtra(MainActivity.HERO_INFO);
+        heroName.setText(displayHero.getName());
+        description.setText(displayHero.getDescription());
+        image.setImageResource(displayHero.getImageResouceID());
     }
 
     private void wireWidgets() {
