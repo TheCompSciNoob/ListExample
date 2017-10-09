@@ -10,14 +10,15 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DisplayActivity extends AppCompatActivity {
 
     private TextView heroName, description;
     private ImageView image;
+    private SuperHero displayHero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +30,9 @@ public class DisplayActivity extends AppCompatActivity {
 
     private void setDisplayInfo() {
         Intent i = getIntent();
-        SuperHero displayHero = i.getParcelableExtra(MainActivity.HERO_INFO);
+        displayHero = i.getParcelableExtra(MainActivity.HERO_INFO);
         heroName.setText(displayHero.getName());
-        description.setText(displayHero.getDescription());
+        description.setText("Ranking: " + displayHero.getRanking() + "; " + displayHero.getDescription());
         image.setImageResource(displayHero.getImageResouceID());
         registerForContextMenu(image);
     }
@@ -58,29 +59,47 @@ public class DisplayActivity extends AppCompatActivity {
                 displayChangeNameDialog();
                 return true;
             case R.id.description_change:
+                displayChangeDescriptionDialog();
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
     }
 
-    private void displayChangeNameDialog()
-    {
+    private void displayChangeDescriptionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.dialog_change, null));
+        final LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_change, null);
+        builder.setView(dialogView);
+        final EditText changeDescription = dialogView.findViewById(R.id.name_new);
+        changeDescription.setHint("New description");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(DisplayActivity.this, "Hey1", Toast.LENGTH_SHORT).show();
+                displayHero.setDescription(changeDescription.getText().toString());
+                description.setText(displayHero.getDescription());
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("CANCEL", null);
+        builder.show();
+    }
+
+    private void displayChangeNameDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_change, null);
+        builder.setView(dialogView);
+        final EditText newName = dialogView.findViewById(R.id.name_new);
+        newName.setHint("New name");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(DisplayActivity.this, "Hey2", Toast.LENGTH_SHORT).show();
+                displayHero.setName(newName.getText().toString());
+                heroName.setText(displayHero.getName());
             }
         });
+        builder.setNegativeButton("CANCEL", null);
         builder.show();
     }
 }

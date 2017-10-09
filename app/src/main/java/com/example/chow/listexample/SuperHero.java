@@ -2,19 +2,22 @@ package com.example.chow.listexample;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 /**
  * Created by per6 on 9/27/17.
  */
 
-public class SuperHero implements Parcelable {
+public class SuperHero implements Parcelable, Comparable<SuperHero> {
     private String name;
     private String description;
     private int imageResouceID;
+    private int ranking;
 
-    public SuperHero(String name, String description, int imageResouceID) {
+    public SuperHero(String name, String description, int ranking, int imageResouceID) {
         this.name = name;
         this.description = description;
+        this.ranking = ranking;
         this.imageResouceID = imageResouceID;
     }
 
@@ -42,6 +45,14 @@ public class SuperHero implements Parcelable {
         this.imageResouceID = imageResouceID;
     }
 
+    public int getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(int ranking) {
+        this.ranking = ranking;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -51,6 +62,7 @@ public class SuperHero implements Parcelable {
         name = in.readString();
         description = in.readString();
         imageResouceID = in.readInt();
+        ranking = in.readInt();
     }
 
     @Override
@@ -63,6 +75,7 @@ public class SuperHero implements Parcelable {
         dest.writeString(name);
         dest.writeString(description);
         dest.writeInt(imageResouceID);
+        dest.writeInt(ranking);
     }
 
     @SuppressWarnings("unused")
@@ -77,4 +90,9 @@ public class SuperHero implements Parcelable {
             return new SuperHero[size];
         }
     };
+
+    @Override
+    public int compareTo(@NonNull SuperHero other) {
+        return this.ranking - other.ranking;
+    }
 }
